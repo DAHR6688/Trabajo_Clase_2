@@ -44,15 +44,15 @@ def create_database_and_table():
             Published TIMESTAMP,
             LastModified TIMESTAMP,
             Description TEXT,
-            cvss_v31_score VARCHAR(15),
-            attackVector VARCHAR(15),               
-            attackComplexity VARCHAR(15),
-            privilegesRequired VARCHAR(15),
-            userInteraction VARCHAR(15),
-            scope VARCHAR(15),
-            confidentialityImpact VARCHAR(15),
-            integrityImpact VARCHAR(15),
-            availabilityImpact VARCHAR(15)
+            cvss_v31_score REAL,
+            attackVector TEXT,   
+            attackComplexity TEXT,
+            privilegesRequired TEXT,
+            userInteraction TEXT,
+            scope TEXT,
+            confidentialityImpact TEXT,
+            integrityImpact TEXT,
+            availabilityImpact TEXT
         );
         """)
         print("Tabla 'NIST_CVEs' creada correctamente.")
@@ -64,36 +64,3 @@ def create_database_and_table():
 
     except Exception as e:
         print(f"Error al crear la base de datos o la tabla: {e}")
-
-# Paso 2: Insertar datos estructurados en la tabla
-def insert_NIST_CVEs():
-    try:
-        # Conectar a la base de datos
-        conn = psycopg2.connect(
-            database="Vulnerabilidades",
-            user="postgres",
-            password="postgres",
-            host="localhost",
-            port="5432"
-        )
-        cursor = conn.cursor()
-
-        # Insertar registros en la tabla
-        cursor.executemany("""
-        INSERT INTO NIST_CVEs (timestamp, ip_address, event_type, description)
-        VALUES (%s, %s, %s, %s);
-        """, logs)
-
-        # Confirmar cambios y cerrar la conexión
-        conn.commit()
-        print("Datos estructurados insertados correctamente.")
-        cursor.close()
-        conn.close()
-
-    except Exception as e:
-        print(f"Error al insertar datos estructurados: {e}")
-
-# Ejecutar todas las funciones
-if __name__ == "__main__":
-    create_database_and_table()  # Crear base de datos y tabla
-    insert_NIST_CVEs()     # Insertar datos estructurados
