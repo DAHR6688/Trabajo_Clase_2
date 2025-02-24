@@ -27,7 +27,7 @@ def create_database_and_table():
         cursor.close()
         conn.close()
 
-        # Conectar a la nueva base de datos
+        # Conectar a la nueva base de datos Vulnerabilidades
         conn = psycopg2.connect(
             database="Vulnerabilidades",
             user="postgres",
